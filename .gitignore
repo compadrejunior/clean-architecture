@@ -1,0 +1,33 @@
+# Modules
+node_modules
+
+# Distribuition
+dist
+build
+
+# Temporary files
+temp
+*.tmp
+
+# Backups
+*.bkp
+
+# Logs
+*.logs
+
+# Database
+data
+
+# Tests reports
+coverage
+TestResults
+
+# Environment
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
+
+# Cache
+.cache
