@@ -1,3 +1,3 @@
 export default interface API {
-  start(): void;
+  start(port: number): void;
 }

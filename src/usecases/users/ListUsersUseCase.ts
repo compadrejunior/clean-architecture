@@ -8,6 +8,8 @@ export type ListUsersOutputDTO = {
   name: string;
   email: string;
   role: string;
+  createdAt: Date;
+  updatedAt: Date | null;
 }[];
 
 export default class ListUsersUseCase
@@ -42,6 +44,8 @@ export default class ListUsersUseCase
       name: user.name,
       email: user.email,
       role: user.role,
+      createdAt: user.created,
+      updatedAt: user.updated,
     }));
   }
 }
