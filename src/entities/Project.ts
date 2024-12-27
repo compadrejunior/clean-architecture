@@ -1,19 +1,18 @@
-import { Task } from '@entities/Task';
-import { User } from '@entities/User';
+import Task from './Task';
 
 /**
  * Project entity class
  */
 export class Project {
-  private id: number;
-  private name: string;
-  private description: string;
-  private owner: User;
-  private startDate: Date;
-  private endDate: Date;
-  private created: Date;
-  private updated: Date | null = null;
-  private tasks: Task[] = [];
+  private _id: string;
+  private _name: string;
+  private _description: string;
+  private _ownerId: string;
+  private _startDate: Date;
+  private _endDate: Date;
+  private _created: Date;
+  private _updated: Date | null = null;
+  private _tasks: Task[] = [];
 
   /**
    * Creates a new Project instance.
@@ -25,29 +24,25 @@ export class Project {
    * @param endDate End date of the project
    */
   constructor(
-    id: number,
     name: string,
     description: string,
-    owner: User,
+    ownerId: string,
     startDate: Date,
     endDate: Date
   ) {
-    if (!Project.isValidId(id.toString())) {
-      throw new Error('Invalid id');
-    }
     if (!Project.isValidName(name)) {
       throw new Error('Invalid name');
     }
     if (!Project.isValidDescription(description)) {
       throw new Error('Invalid description');
     }
-    this.id = id;
-    this.name = name;
-    this.description = description;
-    this.owner = owner;
-    this.created = new Date();
-    this.startDate = startDate;
-    this.endDate = endDate;
+    this._id = crypto.randomUUID.toString();
+    this._name = name;
+    this._description = description;
+    this._ownerId = ownerId;
+    this._created = new Date();
+    this._startDate = startDate;
+    this._endDate = endDate;
   }
 
   /**
@@ -81,72 +76,72 @@ export class Project {
    * Gets the project's ID.
    * @returns The project's ID
    */
-  public getId(): number {
-    return this.id;
+  public get id(): string {
+    return this._id;
   }
 
   /**
    * Gets the project's name.
    * @returns The project's name
    */
-  public getName(): string {
-    return this.name;
+  public get name(): string {
+    return this._name;
   }
 
   /**
    * Gets the project's description.
    * @returns The project's description
    */
-  public getDescription(): string {
-    return this.description;
+  public get description(): string {
+    return this._description;
   }
 
   /**
    * Gets the project's owner.
    * @returns The project's owner
    */
-  public getOwner(): User {
-    return this.owner;
+  public get ownerId(): string {
+    return this._ownerId;
   }
 
   /**
    * Gets the project's start date.
    * @returns The project's start date
    */
-  public getStartDate(): Date {
-    return this.startDate;
+  public get startDate(): Date {
+    return this._startDate;
   }
 
   /**
    * Gets the project's end date.
    * @returns The project's end date
    */
-  public getEndDate(): Date {
-    return this.endDate;
+  public get endDate(): Date {
+    return this._endDate;
   }
 
   /**
    * Gets the project's creation date.
    * @returns The project's creation date
    */
-  public getCreated(): Date {
-    return this.created;
+  public get created(): Date {
+    return this._created;
   }
 
   /**
    * Gets the project's last update date.
    * @returns The project's last update date
    */
-  public getUpdated(): Date | null {
-    return this.updated;
+  public get updated(): Date | null {
+    return this._updated;
   }
 
   /**
    * Gets the project's tasks.
    * @returns The project's tasks
    */
-  public getTasks(): Task[] {
-    return this.tasks;
+  public get tasks(): Task[] {
+    return this._tasks;
   }
 
   /**
@@ -159,26 +154,26 @@ export class Project {
   public update(
     name: string,
     description: string,
-    owner: User,
+    ownerId: string,
     startDate: Date,
     endDate: Date
   ): void {
     if (Project.isValidName(name)) {
-      this.name = name;
+      this._name = name;
     }
     if (Project.isValidDescription(description)) {
-      this.description = description;
+      this._description = description;
     }
-    if (owner) {
-      this.owner = owner;
+    if (ownerId) {
+      this._ownerId = ownerId;
     }
     if (startDate) {
-      this.startDate = startDate;
+      this._startDate = startDate;
     }
     if (endDate) {
-      this.endDate = endDate;
+      this._endDate = endDate;
     }
-    this.updated = new Date();
+    this._updated = new Date();
   }
 
   /**
@@ -186,16 +181,16 @@ export class Project {
    * @param task - The task to add
    */
   public addTask(task: Task): void {
-    this.tasks.push(task);
-    this.updated = new Date();
+    this._tasks.push(task);
+    this._updated = new Date();
   }
   /**
    * Removes a task from the project.
    * @param task - The task to remove
    */
   public removeTask(task: Task): void {
-    this.tasks = this.tasks.filter((t) => t !== task);
-    this.updated = new Date();
+    this._tasks = this.tasks.filter((t) => t !== task);
+    this._updated = new Date();
   }
 
   /**
@@ -203,10 +198,10 @@ export class Project {
    * @param task - The task to update
    */
   public updateTask(task: Task): void {
-    const index = this.tasks.findIndex((t) => t.getId() === task.getId());
+    const index = this.tasks.findIndex((t) => t.id === task.id);
     if (index !== -1) {
-      this.tasks[index] = task;
-      this.updated = new Date();
+      this._tasks[index] = task;
+      this._updated = new Date();
     }
   }
 
@@ -215,8 +210,8 @@ export class Project {
    * @param id - The ID of the task to get
    * @returns The task with the given ID, or undefined if not found
    */
-  public getTaskById(id: number): Task | undefined {
-    return this.tasks.find((task) => task.getId() === id);
+  public geTaskById(id: string): Task | undefined {
+    return this._tasks.find((task) => task.id === id);
   }
 
   /**
@@ -225,7 +220,7 @@ export class Project {
    * @returns The tasks with the given status
    */
   public getTasksByStatus(status: string): Task[] {
-    return this.tasks.filter((task) => task.getStatus() === status);
+    return this._tasks.filter((task) => task.status === status);
   }
 
   /**
@@ -233,71 +228,71 @@ export class Project {
    * @param assignee The assignee of the tasks to get
    * @returns The tasks with the given assignee
    */
-  public getTasksByAssignee(assignee: User): Task[] {
-    return this.tasks.filter((task) => task.getAssignee() === assignee);
+  public getTasksByAssignee(assigneeId: string): Task[] {
+    return this._tasks.filter((task) => task.assigneeId === assigneeId);
   }
 
   /**
    * Gets tasks by owner.
-   * @param owner The owner of the tasks to get
+   * @param ownerId The owner of the tasks to get
    * @returns The tasks with the given owner
    */
-  public getTasksByOwner(owner: User): Task[] {
-    return this.tasks.filter((task) => task.getOwner() === owner);
+  public getTasksByOwner(ownerId: string): Task[] {
+    return this._tasks.filter((task) => task.ownerId === ownerId);
   }
 
   /**
    * Updates the project name
    * @param name New name for the project
    */
-  public setName(name: string): void {
+  public set name(name: string) {
     if (Project.isValidName(name)) {
-      this.name = name;
+      this._name = name;
     }
-    this.updated = new Date();
+    this._updated = new Date();
   }
 
   /**
    * Update the project description
    * @param description New description for the project
    */
-  public setDescription(description: string): void {
+  public set description(description: string) {
     if (Project.isValidDescription(description)) {
-      this.description = description;
+      this._description = description;
     }
-    this.updated = new Date();
+    this._updated = new Date();
   }
 
   /**
    * Updates the project owner
    * @param owner New owner for the project
    */
-  public setOwner(owner: User): void {
-    if (owner) {
-      this.owner = owner;
+  public set owner(ownerId: string) {
+    if (ownerId) {
+      this._ownerId = ownerId;
     }
-    this.updated = new Date();
+    this._updated = new Date();
   }
 
   /**
    * Updates project start date
    * @param startDate New start date for the project
    */
-  public setStartDate(startDate: Date): void {
+  public set startDate(startDate: Date) {
     if (startDate) {
-      this.startDate = startDate;
+      this._startDate = startDate;
     }
-    this.updated = new Date();
+    this._updated = new Date();
   }
 
   /**
    * Updates project end date
    * @param endDate New end date for the project
    */
-  public setEndDate(endDate: Date): void {
+  public set endDate(endDate: Date) {
     if (endDate) {
-      this.endDate = endDate;
+      this._endDate = endDate;
     }
-    this.updated = new Date();
+    this._updated = new Date();
   }
 }
