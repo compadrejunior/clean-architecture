@@ -17,9 +17,7 @@ export type CreateTaskOutputDTO = {
 /**
  * Create task use case
  */
-export class CreateTaskUseCase
-  implements UseCase<CreateTaskInputDTO, CreateTaskOutputDTO>
-{
+export class CreateTaskUseCase implements UseCase {
   /**
    * Constructor for CreateTaskUseCase
    * @param taskRepository Interface for Task persistence implementation

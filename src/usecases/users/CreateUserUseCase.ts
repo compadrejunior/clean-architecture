@@ -35,14 +35,16 @@ export type CreateUserOutput = {
 /**
  * Create user use case
  */
-export class CreateUserUseCase
-  implements UseCase<CreateUserInput, CreateUserOutput>
-{
+export default class CreateUserUseCase implements UseCase {
   /**
    * Constructor for CreateUserUseCase
    * @param userRepository Interface for User persistence implementation
    */
-  constructor(private readonly userRepository: UserRepositoryGateway) {}
+  private constructor(private readonly userRepository: UserRepositoryGateway) {}
+
+  public static create(userRepository: UserRepositoryGateway) {
+    return new CreateUserUseCase(userRepository);
+  }
 
   /**
    * Create a new user

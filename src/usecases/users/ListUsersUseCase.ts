@@ -15,14 +15,16 @@ export type ListUsersOutputDTO = {
 /**
  * List users use case
  */
-export default class ListUsersUseCase
-  implements UseCase<ListUsersInputDTO, ListUsersOutputDTO>
-{
+export default class ListUsersUseCase implements UseCase {
   /**
    * Constructyor for CreateUserUseCase
    * @param userRepository Interface for User persistence implementation
    */
-  constructor(private readonly userRepository: UserRepositoryGateway) {}
+  private constructor(private readonly userRepository: UserRepositoryGateway) {}
+
+  public static create(userRepository: UserRepositoryGateway) {
+    return new ListUsersUseCase(userRepository);
+  }
 
   /**
    * Return all users

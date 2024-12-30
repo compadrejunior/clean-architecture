@@ -4,10 +4,9 @@ import MongoDB from './frameworks/database/MongoDB';
 import UserRepository from './frameworks/repository/UserRepository';
 import Database from './frameworks/database/Database';
 import CreateUserRoute from './frameworks/api/routes/CreateUserRoute';
-import { CreateUserUseCase } from './usecases/users/CreateUserUseCase';
+import CreateUserUseCase from './usecases/users/CreateUserUseCase';
 import ListUsersRoute from './frameworks/api/routes/ListUsersRoute';
 import APIExpress from './frameworks/api/APIExpress';
-import { UseCaseFactoryImpl } from './usecases/UseCaseFactoryImpl';
 
 async function main() {
   // Load and connect to database
@@ -21,15 +20,13 @@ async function main() {
   const userRepository = new UserRepository();
   console.log('UserRepository loaded.');
 
-  const createUserUserCase = new CreateUserUseCase(userRepository);
+  const createUserUserCase = CreateUserUseCase.create(userRepository);
   console.log('CreateUserUseCase loaded.');
-
-  const listUsersUseCase = new ListUsersUseCase(userRepository);
-  console.log('ListUsersUseCase loaded.');
-
   const createUserRoute = CreateUserRoute.create(createUserUserCase);
   console.log('CreateUserRoute loaded.');
 
+  const listUsersUseCase = ListUsersUseCase.create(userRepository);
+  console.log('ListUsersUseCase loaded.');
   const listUsersRoute = ListUsersRoute.create(listUsersUseCase);
   console.log('ListUsersRoute loaded.');
 

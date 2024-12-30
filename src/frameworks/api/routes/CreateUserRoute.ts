@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
-import {
+import CreateUserUseCase, {
   CreateUserInput,
-  CreateUserUseCase,
 } from '../../../usecases/users/CreateUserUseCase';
 import Route, { HttpMethod } from './Route';
 
