@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import {
-  CreateUserInputDTO,
+  CreateUserInput,
   CreateUserUseCase,
 } from '../../../usecases/users/CreateUserUseCase';
 import Route, { HttpMethod } from './Route';
@@ -49,7 +49,7 @@ export default class CreateUserRoute implements Route {
     return async (request: Request, response: Response) => {
       const { name, email, password, role } = request.body;
 
-      const input: CreateUserInputDTO = {
+      const input: CreateUserInput = {
         name,
         email,
         password,

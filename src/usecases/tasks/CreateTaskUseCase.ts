@@ -14,17 +14,23 @@ export type CreateTaskOutputDTO = {
   status: string;
   ownerId: string;
 };
+/**
+ * Create task use case
+ */
 export class CreateTaskUseCase
   implements UseCase<CreateTaskInputDTO, CreateTaskOutputDTO>
 {
-  private constructor(private readonly taskRepository: TaskRepositoryGateway) {}
+  /**
+   * Constructor for CreateTaskUseCase
+   * @param taskRepository Interface for Task persistence implementation
+   */
+  constructor(private readonly taskRepository: TaskRepositoryGateway) {}
 
-  public static create(
-    taskRepository: TaskRepositoryGateway
-  ): CreateTaskUseCase {
-    return new CreateTaskUseCase(taskRepository);
-  }
-
+  /**
+   * Create a new task
+   * @param input CreateTaskInputDTO
+   * @returns CreateTaskOutputDTO
+   */
   public async execute(
     input: CreateTaskInputDTO
   ): Promise<CreateTaskOutputDTO> {
@@ -34,6 +40,8 @@ export class CreateTaskUseCase
       status: 'TODO',
       ownerId: input.ownerId,
     });
+
+    await this.taskRepository.save(task);
 
     return {
       id: task.id,

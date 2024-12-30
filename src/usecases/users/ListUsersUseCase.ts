@@ -1,7 +1,7 @@
 import UserRepositoryGateway from '../../interfaces/gateways/UserRepositoryGateway';
 import UseCase from '../UseCase';
 
-export type ListUsersInputDTO = void;
+export type ListUsersInputDTO = {};
 
 export type ListUsersOutputDTO = {
   id: string;
@@ -12,25 +12,17 @@ export type ListUsersOutputDTO = {
   updatedAt: Date | null;
 }[];
 
+/**
+ * List users use case
+ */
 export default class ListUsersUseCase
   implements UseCase<ListUsersInputDTO, ListUsersOutputDTO>
 {
   /**
-   * Private constructyor for CreateUserUseCase
+   * Constructyor for CreateUserUseCase
    * @param userRepository Interface for User persistence implementation
    */
-  private constructor(private readonly userRepository: UserRepositoryGateway) {}
-
-  /**
-   * Public constructor for CreateUserUseCase
-   * @param userRepository Interface for User persistence implementation
-   * @returns a list of users
-   */
-  public static create(
-    userRepository: UserRepositoryGateway
-  ): ListUsersUseCase {
-    return new ListUsersUseCase(userRepository);
-  }
+  constructor(private readonly userRepository: UserRepositoryGateway) {}
 
   /**
    * Return all users

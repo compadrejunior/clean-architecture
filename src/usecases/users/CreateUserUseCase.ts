@@ -9,7 +9,7 @@ import UseCase from '../UseCase';
  * @param password
  * @param role
  */
-export type CreateUserInputDTO = {
+export type CreateUserInput = {
   name: string;
   email: string;
   password: string;
@@ -24,7 +24,7 @@ export type CreateUserInputDTO = {
  * @param password
  * @param role
  */
-export type CreateUserOutputDTO = {
+export type CreateUserOutput = {
   id: string;
   name: string;
   email: string;
@@ -32,20 +32,24 @@ export type CreateUserOutputDTO = {
   createdAt: Date;
 };
 
+/**
+ * Create user use case
+ */
 export class CreateUserUseCase
-  implements UseCase<CreateUserInputDTO, CreateUserOutputDTO>
+  implements UseCase<CreateUserInput, CreateUserOutput>
 {
-  private constructor(private readonly userRepository: UserRepositoryGateway) {}
+  /**
+   * Constructor for CreateUserUseCase
+   * @param userRepository Interface for User persistence implementation
+   */
+  constructor(private readonly userRepository: UserRepositoryGateway) {}
 
-  public static create(
-    userRepository: UserRepositoryGateway
-  ): CreateUserUseCase {
-    return new CreateUserUseCase(userRepository);
-  }
-
-  public async execute(
-    input: CreateUserInputDTO
-  ): Promise<CreateUserOutputDTO> {
+  /**
+   * Create a new user
+   * @param input CreateUserInput
+   * @returns CreateUserOutput
+   */
+  public async execute(input: CreateUserInput): Promise<CreateUserOutput> {
     const user = new User({
       name: input.name,
       email: input.email,

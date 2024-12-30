@@ -7,6 +7,7 @@ import CreateUserRoute from './frameworks/api/routes/CreateUserRoute';
 import { CreateUserUseCase } from './usecases/users/CreateUserUseCase';
 import ListUsersRoute from './frameworks/api/routes/ListUsersRoute';
 import APIExpress from './frameworks/api/APIExpress';
+import { UseCaseFactoryImpl } from './usecases/UseCaseFactoryImpl';
 
 async function main() {
   // Load and connect to database
@@ -20,10 +21,10 @@ async function main() {
   const userRepository = new UserRepository();
   console.log('UserRepository loaded.');
 
-  const createUserUserCase = CreateUserUseCase.create(userRepository);
+  const createUserUserCase = new CreateUserUseCase(userRepository);
   console.log('CreateUserUseCase loaded.');
 
-  const listUsersUseCase = ListUsersUseCase.create(userRepository);
+  const listUsersUseCase = new ListUsersUseCase(userRepository);
   console.log('ListUsersUseCase loaded.');
 
   const createUserRoute = CreateUserRoute.create(createUserUserCase);
