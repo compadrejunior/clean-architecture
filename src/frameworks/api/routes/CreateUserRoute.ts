@@ -3,6 +3,8 @@ import CreateUserUseCase, {
   CreateUserInput,
 } from '../../../usecases/users/CreateUserUseCase';
 import Route, { HttpMethod } from './Route';
+import CreateUserValidator from '../validator/CreateUserValidator';
+import { Validator } from '../validator/Validator';
 
 /**
  * Create user response DTO
@@ -28,7 +30,8 @@ export default class CreateUserRoute implements Route {
   private constructor(
     private readonly path: string,
     private readonly method: HttpMethod,
-    private readonly createUserService: CreateUserUseCase
+    private readonly createUserService: CreateUserUseCase,
+    private readonly validator: Validator
   ) {}
 
   /**
@@ -37,7 +40,13 @@ export default class CreateUserRoute implements Route {
    * @returns The create user route
    */
   public static create(createUserService: CreateUserUseCase) {
-    return new CreateUserRoute('/user', HttpMethod.POST, createUserService);
+    const validator = new CreateUserValidator();
+    return new CreateUserRoute(
+      '/user',
+      HttpMethod.POST,
+      createUserService,
+      validator
+    );
   }
 
   /**
@@ -46,8 +55,12 @@ export default class CreateUserRoute implements Route {
    */
   public getHandler() {
     return async (request: Request, response: Response) => {
+      const errors = this.validator.validate(request.body);
+      if (errors && errors.length > 0) {
+        response.status(400).json({ message: errors }).send();
+        return;
+      }
       const { name, email, password, role } = request.body;
-
       const input: CreateUserInput = {
         name,
         email,
@@ -55,11 +68,19 @@ export default class CreateUserRoute implements Route {
         role,
       };
 
-      const output: CreateUserResponseDTO =
-        await this.createUserService.execute(input);
+      try {
+        const output: CreateUserResponseDTO =
+          await this.createUserService.execute(input);
 
-      const body = this.present(output);
-      response.status(201).json(body).send();
+        const body = this.present(output);
+        response.status(201).json(body).send();
+      } catch (error) {
+        if (error instanceof Error) {
+          response.status(400).json({ message: error.message }).send();
+        } else {
+          response.status(500).json({ message: 'Server error' }).send();
+        }
+      }
     };
   }
 

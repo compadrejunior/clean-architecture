@@ -91,7 +91,7 @@ export default class User {
    * @returns True if role is either 'admin' or 'user', false otherwise
    */
   public static isValidRole(role: string): boolean {
-    const validRoles = ['admin', 'user'];
+    const validRoles = ['Admin', 'User'];
     return validRoles.includes(role);
   }
   /**
