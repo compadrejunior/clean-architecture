@@ -11,13 +11,13 @@ describe('Task', () => {
         name: 'John Doe',
         email: 'email@test.com',
         password: '12345678',
-        role: 'admin',
+        role: 'Admin',
       });
       const assignee = new User({
         name: 'Jane Doe',
         email: 'jane@test.com',
         password: '12345678',
-        role: 'user',
+        role: 'User',
       });
       const taskProps = {
         title: 'Task 1',

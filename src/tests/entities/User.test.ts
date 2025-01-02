@@ -7,7 +7,7 @@ describe('User', () => {
         name: 'John Doe',
         email: 'email@test.com',
         password: '12345678',
-        role: 'admin',
+        role: 'Admin',
       });
       expect(user).toBeInstanceOf(User);
       expect(user).toHaveProperty('id');
@@ -18,7 +18,7 @@ describe('User', () => {
           name: 'John Doe',
           email: 'email@test',
           password: '12345678',
-          role: 'admin',
+          role: 'Admin',
         });
       } catch (error) {
         expect(error).toBeInstanceOf(Error);
@@ -31,7 +31,7 @@ describe('User', () => {
           name: 'John Doe',
           email: 'email@test.com',
           password: '123',
-          role: 'admin',
+          role: 'Admin',
         });
       } catch (error) {
         expect(error).toBeInstanceOf(Error);
@@ -57,7 +57,7 @@ describe('User', () => {
           name: 'Jo',
           email: 'email@test.com',
           password: '12345678',
-          role: 'admin',
+          role: 'Admin',
         });
       } catch (error) {
         expect(error).toBeInstanceOf(Error);
@@ -71,7 +71,7 @@ describe('User', () => {
         name: 'John Doe',
         email: 'email@test.com',
         password: '12345678',
-        role: 'admin',
+        role: 'Admin',
       });
       user.name = 'Jane Doe';
       expect(user.name).toBe('Jane Doe');
@@ -81,7 +81,7 @@ describe('User', () => {
         name: 'John Doe',
         email: 'email@test.com',
         password: '12345678',
-        role: 'admin',
+        role: 'Admin',
       });
       try {
         user.name = 'Jo';
@@ -95,7 +95,7 @@ describe('User', () => {
         name: 'John Doe',
         email: 'email@test.com',
         password: '12345678',
-        role: 'admin',
+        role: 'Admin',
       });
       user.email = 'newemail@test.com';
       expect(user.email).toBe('newemail@test.com');
@@ -105,7 +105,7 @@ describe('User', () => {
         name: 'John Doe',
         email: 'email@test.com',
         password: '12345678',
-        role: 'admin',
+        role: 'Admin',
       });
       try {
         user.email = 'newemail@test';
@@ -119,7 +119,7 @@ describe('User', () => {
         name: 'John Doe',
         email: 'email@test.com',
         password: '12345678',
-        role: 'admin',
+        role: 'Admin',
       });
       user.password = 'newpassword';
       expect(user.password).toBe('newpassword');
@@ -129,7 +129,7 @@ describe('User', () => {
         name: 'John Doe',
         email: 'email@test.com',
         password: '12345678',
-        role: 'admin',
+        role: 'Admin',
       });
       try {
         user.password = 'new';
@@ -143,17 +143,17 @@ describe('User', () => {
         name: 'John Doe',
         email: 'email@test.com',
         password: '12345678',
-        role: 'admin',
+        role: 'Admin',
       });
-      user.role = 'user';
-      expect(user.role).toBe('user');
+      user.role = 'User';
+      expect(user.role).toBe('User');
     });
     it('should throw an error when setting invalid role', () => {
       const user = new User({
         name: 'John Doe',
         email: 'email@test.com',
         password: '12345678',
-        role: 'admin',
+        role: 'Admin',
       });
       try {
         user.role = 'invalid';
@@ -167,7 +167,7 @@ describe('User', () => {
         name: 'John Doe',
         email: 'email@test.com',
         password: '12345678',
-        role: 'admin',
+        role: 'Admin',
       });
       expect(user.id).toBeDefined();
     });
@@ -176,7 +176,7 @@ describe('User', () => {
         name: 'John Doe',
         email: 'email@test.com',
         password: '12345678',
-        role: 'admin',
+        role: 'Admin',
       });
       expect(user.created).toBeInstanceOf(Date);
     });
@@ -185,7 +185,7 @@ describe('User', () => {
         name: 'John Doe',
         email: 'email@test.com',
         password: '12345678',
-        role: 'admin',
+        role: 'Admin',
       });
       user.name = 'Jane Doe';
       expect(user.updated).toBeInstanceOf(Date);
